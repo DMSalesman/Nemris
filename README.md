@@ -60,7 +60,7 @@ The arguments `-u`, `-s`, `-d` and `-a` identify the typology of apps to extract
 
 `-d/--disabled`: apps frozen either via `pm disable` or via some application. Apps under this category might be both user and system apps;
 
-`-a/--all`: any application on the devicee, from all of the above categories.
+`-a/--all`: any application on the device, from all of the above categories.
 
 ### Configuration reset
 
