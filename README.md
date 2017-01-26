@@ -2,7 +2,7 @@
 
 Nemris is a Python (3.5+) tool to be ran on Android devices, whose goal is to save the APK files of any installed apps in a folder of your choice, for future use.
 
-**Root permissions are needed in order to run Nemris.**
+**Root privileges are needed in order to run Nemris. Not compatible with systemless root.**
 
 -----
 
