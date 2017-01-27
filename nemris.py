@@ -42,7 +42,7 @@ def welcome():
     
     print("************************")
     print(" NEMRIS - APK extractor ")
-    print("  v1.1.2 -- 2017-01-13  ")
+    print("       2017-01-27       ")
     print(" by Death Mask Salesman ")
     print("************************")
     
