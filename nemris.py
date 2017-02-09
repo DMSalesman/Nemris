@@ -42,7 +42,7 @@ def welcome():
     
     print("************************")
     print(" NEMRIS - APK extractor ")
-    print("       2017-01-27       ")
+    print("       2017-02-09       ")
     print(" by Death Mask Salesman ")
     print("************************")
     
@@ -442,7 +442,7 @@ if not _args.keep_arcus:
         _nemris_config["arcus_installed"] = check_for_arcus()
     
     if _nemris_config.get("arcus_installed"):
-        purged_packages = purge_arcus_variants(_purged_packages)
+        _purged_packages = purge_arcus_variants(_purged_packages)
     
     print()
 else:
