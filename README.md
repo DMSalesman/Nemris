@@ -11,7 +11,7 @@ Nemris is a Python (3.5+) tool to be ran on Android devices, whose goal is to sa
 * Creation and maintenance of a folder containing APK files without worrying about exact duplicates, thanks to MD5 checks;
 * Awareness of the popular Substratum Theme Engine overlays and Arcus theme variants, which Nemris automatically skips;
 * Discrimination between user, system and disabled apps;
-* Compatibility with both **aapt** and **aopt**, needed to retrieve app banes and versions;
+* Compatibility with both **aapt** and **aopt**, needed to retrieve app names and versions;
 * Fast retrieval of APK paths, thanks to the **packages.xml** file, which needs root permissions to be read;
 * Caching of certain checks, to avoid calculating them unnecessarily more than once.
 
