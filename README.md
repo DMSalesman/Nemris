@@ -1,18 +1,25 @@
 ## Purpose
 
 Nemris is a Python (3.5+) tool to be ran on Android devices, whose goal is to save the APK files of any installed apps in a folder of your choice, for future use.
+-----
 
-**Root privileges are needed in order to run Nemris. Not compatible with systemless root.**
+## Requirements
+
+To run, Nemris requires:
+
+* root privileges (to read `/data/system/packages.xml` and to forcefully copy to the destination directory if problems arise);
+* `aapt` or `aopt` placed at `/system/bin`;
+* Python 3.5 or greater.
 
 -----
 
 ## Strengths
 
 * Creation and maintenance of a folder containing APK files without worrying about exact duplicates, thanks to MD5 checks;
+* Extraction of APKs whose name is the same;
 * Awareness of the popular Substratum Theme Engine overlays and Arcus theme variants, which Nemris automatically skips;
 * Discrimination between user, system and disabled apps;
-* Compatibility with both **aapt** and **aopt**, needed to retrieve app names and versions;
-* Fast retrieval of APK paths, thanks to the **packages.xml** file, which needs root permissions to be read;
+* Fast retrieval of APK paths, thanks to the `/data/system/packages.xml` file;
 * Caching of certain checks, to avoid calculating them unnecessarily more than once.
 
 -----
@@ -20,7 +27,7 @@ Nemris is a Python (3.5+) tool to be ran on Android devices, whose goal is to sa
 ## Weaknesses
 
 * Older APK files in the chosen directory aren't automatically deleted, leaving that to the user;
-* No fancy handling of most errors. If Nemris fails, you'll see it loud and clear.
+* Nemris' configuration file (`nemris_config.pkl`) is never deleted without user intervention, and can grow bigger as you use Nemris.
 
 -----
 
