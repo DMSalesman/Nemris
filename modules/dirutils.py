@@ -3,6 +3,7 @@
 import glob
 import hashlib
 import os
+import re
 import shutil
 
 import utils    # needed for sudo
@@ -48,8 +49,30 @@ def calculate_md5(dir):
     
     return md5sums
 
+def handle_duplicate_names(dest):
+    """Adjusts the dest of APKs with the same pkgname; returns str."""
+    
+    if os.path.isfile(dest):
+        prefix = dest.rstrip(".apk")
+        c = re.findall("-([\d].*?)$", prefix)
+        
+        if not c:
+            c = 1
+        else:
+            prefix = prefix[: -len(c[0])]
+        
+        while True:
+            dest = "{0}-{1}.apk".format(prefix, c)
+            c += 1
+            
+            if not os.path.isfile(dest): break
+    
+    return dest
+
 def extract(pkgpath, dest):
     """Copies an APK file pkgpath to dest, resorting to root privileges if needed; returns nothing."""
+    
+    dest = handle_duplicate_names(dest)
     
     try:
         shutil.copyfile(pkgpath, dest)
