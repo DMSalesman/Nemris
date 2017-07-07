@@ -27,4 +27,4 @@ def get_current_time():
 def check_aapt_aopt():
     """Checks if aapt and aopt are present; returns tuple."""
     
-    return tuple(i for i in [os.path.exists("/system/bin/aapt"), os.path.exists("/system/bin/aopt")])
+    return tuple(i for i in [os.path.exists("/system/bin/aapt"), os.path.exists("/system/bin/aopt"), os.path.exists("/data/data/com.termux/files/usr/bin/aapt")])
