@@ -52,11 +52,11 @@ def list_installed_pkgs(args):
     
     return pkgs
 
-def check_masquerade():
-    """Checks if the Masquerade component of the Substratum engine is installed; returns bool."""
+def check_substratum():
+    """Checks if the Substratum engine is installed; returns bool."""
     
-    system_pkgs = [i[8:] for i in subprocess.Popen("pm list packages -s", stdout = subprocess.PIPE, shell = True).communicate()[0].decode("utf-8").split("\n") if i]
-    substratum_installed = True if "masquerade.substratum" in system_pkgs else False
+    user_pkgs = [i[8:] for i in subprocess.Popen("pm list packages -3", stdout = subprocess.PIPE, shell = True).communicate()[0].decode("utf-8").split("\n") if i]
+    substratum_installed = True if "projekt.substratum" in user_pkgs else False
     
     return substratum_installed
 
@@ -65,7 +65,7 @@ def exclude_overlays(aapt, pkgdict, pkgs):
     
     for i in pkgs:
         pkgpath = pkgdict.get(i)
-        out = apkutils.get_pkgxml(pkgpath)[0].decode("utf-8")
+        out = apkutils.get_pkgxml(aapt, pkgpath)[0].decode("utf-8")
         
         if "Substratum_Parent" in out: pkgs.remove(i)
 
