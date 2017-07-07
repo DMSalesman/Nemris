@@ -17,7 +17,7 @@ config_path = os.path.dirname(os.path.abspath(__file__)) + "/nemris_config.pkl"
 config = {
 "aapt": "",
 "dir": "",
-"masquerade": None,
+"substratum": None,
 "md5sums": []
 }
 
@@ -47,7 +47,7 @@ if not args.user:
 
 print("************************")
 print(" NEMRIS - APK extractor ")
-print("       2017-06-21       ")
+print("       2017-07-07       ")
 print(" by Death Mask Salesman ")
 print("************************")
 
@@ -80,6 +80,8 @@ if not config.get("aapt"):
         config["aapt"] = "/system/bin/aapt"
     elif aapt_aopt_exist[1]:
         config["aapt"] = "/system/bin/aopt"
+    elif aapt_aopt_exist[2]:
+        config["aapt"] = "/data/data/com.termux/files/usr/bin/aapt"
     else:
         print("[ F ] Neither aapt nor aopt is installed. Aborting.")
         
@@ -121,17 +123,17 @@ print("done.\n")
 pkgs = pkgutils.list_installed_pkgs(args)
 
 if not args.keep_overlays:
-    if config.get("masquerade") == None:
-        config["masquerade"] = pkgutils.check_masquerade()
+    if config.get("substratum") == None:
+        config["substratum"] = pkgutils.check_substratum()
     
-    if config.get("masquerade"):
+    if config.get("substratum"):
         print("[ I ] Excluding Substratum overlays...", end = " ", flush = True)
         
         pkgutils.exclude_overlays(config.get("aapt"), pkgdict, pkgs)
         
         print("done.\n")
 
-if not args.keep_arcus and not config.get("masquerade"):
+if not args.keep_arcus and not config.get("substratum"):
     print("[ I ] Excluding Arcus theme variants...", end = " ", flush = True)
     
     pkgutils.exclude_arcus_variants(pkgs)
