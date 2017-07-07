@@ -53,16 +53,19 @@ def handle_duplicate_names(dest):
     """Adjusts the dest of APKs with the same pkgname; returns str."""
     
     if os.path.isfile(dest):
-        prefix = dest.rstrip(".apk")
-        c = re.findall("-([\d].*?)$", prefix)
+        prefix = os.path.dirname(dest)
+        suffix = os.path.basename(dest).rstrip(".apk")
+        
+        c = re.findall("-([\d].*?)$", suffix)
         
         if not c:
             c = 1
         else:
-            prefix = prefix[: -len(c[0])]
+            suffix = suffix[: -len(c[0])]
         
         while True:
-            dest = "{0}-{1}.apk".format(prefix, c)
+            dest = "{0}/{1}-{2}.apk".format(prefix, suffix, c)
+            
             c += 1
             
             if not os.path.isfile(dest): break
@@ -77,4 +80,6 @@ def extract(pkgpath, dest):
     try:
         shutil.copyfile(pkgpath, dest)
     except:
-        sudo("cp {0} {1}".format(pkgpath, dest))
+        utils.sudo("cp {0} {1}".format(pkgpath, dest))
+        utils.sudo("chmod 660 {0}".format(dest))
+        utils.sudo("chown media_rw.media_rw {0}".format(dest))
