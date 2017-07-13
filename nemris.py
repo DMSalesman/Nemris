@@ -47,7 +47,7 @@ if not args.user:
 
 print("************************")
 print(" NEMRIS - APK extractor ")
-print("       2017-07-07       ")
+print("       2017-07-13       ")
 print(" by Death Mask Salesman ")
 print("************************")
 
@@ -120,6 +120,10 @@ pkgdict = pkgutils.create_pkgdict()
 
 print("done.\n")
 
+if not pkgdict:
+    print("[ F ] Unable to create paths dictionary. Aborting.")
+    utils.save_exit(config, config_path, 1)
+
 pkgs = pkgutils.list_installed_pkgs(args)
 
 if not args.keep_overlays:
@@ -155,7 +159,7 @@ for i in pkgs:
     (already_extracted, pkgsum) = pkgutils.check_already_extracted(pkgpath, config.get("md5sums"))
     
     if already_extracted:
-        print("[ I ] {0}: ignored.".format(displayedname))
+        print("[ I ] {0}: ignored.".format(displayedname), flush = True)
         
         ignored += 1
     else:
@@ -167,7 +171,7 @@ for i in pkgs:
         config["md5sums"].append(pkgsum)
         extracted += 1
         
-        print("done.")
+        print("done.", flush = True)
 
 elapsed_time = utils.get_current_time() - start_time
 
