@@ -17,6 +17,10 @@ def sudo(cmd):
     """Executes a command cmd as root; returns bytes, bytes."""
     
     (out, err) = subprocess.Popen("/system/bin/su -c '{0}' && exit &".format(cmd), stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True).communicate()
+    
+    if err:
+        (out, err) = subprocess.Popen("/system/xbin/su -c '{0}' && exit &".format(cmd), stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True).communicate()
+    
     return out, err
 
 def get_current_time():
