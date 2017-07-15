@@ -97,11 +97,12 @@ if config.get("nougat") == None:
     print("done.\n")
 
 # Prompts user to set target dir
-if not config.get("dir"): config["dir"] = dirutils.ask_dir()
+if not config.get("dir"):
+    config["dir"] = dirutils.ask_dir()
+    
+    print()
 
 (dir_exists, dir_has_apks) = dirutils.check_dir(config.get("dir"))
-
-print()
 
 if not dir_exists:
     print("[ I ] Creating \"{0}\"...".format(config.get("dir")), end = " ", flush = True)
