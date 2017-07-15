@@ -8,7 +8,7 @@ Nemris is a Python (3.5+) tool to be ran on Android devices, whose goal is to sa
 
 To run, Nemris requires:
 
-* root privileges (to read `/data/system/packages.xml` and to forcefully copy to the destination directory if problems arise);
+* root privileges (to read `/data/system/packages.xml`, to execute `cmd` if on Nougat and to forcefully copy to the destination directory if problems arise);
 * `aapt` or `aopt` placed at `/system/bin`, or `aapt` installed from Termux with `apt install aapt`;
 * Python 3.5 or greater.
 
