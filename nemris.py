@@ -71,7 +71,7 @@ else:
 
 # Checks for aapt and aopt (as fallback on Nougat)
 if not config.get("aapt"):
-    print("[ I ] Checking if either aapt or aopt is present.. ", end = " ", flush = True)
+    print("[ I ] Checking if either aapt or aopt is present...", end = " ", flush = True)
     
     aapt_aopt_exist = utils.check_aapt_aopt()
     
@@ -118,7 +118,7 @@ if not dir_exists:
 # Creates a MD5 list to speed up subsequent executions
 if not config.get("md5sums"):
     if dir_has_apks:
-        print("\n[ I ] Generating MD5 checksums...", end = " ", flush = True)
+        print("[ I ] Generating MD5 checksums...", end = " ", flush = True)
         
         config["md5sums"] = dirutils.calculate_md5(config.get("dir"))
         
