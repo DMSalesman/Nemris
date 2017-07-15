@@ -16,6 +16,7 @@ from modules import utils
 config_path = os.path.dirname(os.path.abspath(__file__)) + "/nemris_config.pkl"
 config = {
 "aapt": "",
+"nougat": None,
 "dir": "",
 "substratum": None,
 "md5sums": []
@@ -47,7 +48,7 @@ if not args.user:
 
 print("************************")
 print(" NEMRIS - APK extractor ")
-print("       2017-07-13       ")
+print("       2017-07-15       ")
 print(" by Death Mask Salesman ")
 print("************************")
 
@@ -87,10 +88,20 @@ if not config.get("aapt"):
         
         utils.save_exit(config, config_path, 1)
 
+# Checks if the Android version is Nougat
+if config.get("nougat") == None:
+    print("[ I ] Checking the Android version...", end = " ")
+	
+    config["nougat"] = utils.check_nougat()
+    
+    print("done.\n")
+
 # Prompts user to set target dir
 if not config.get("dir"): config["dir"] = dirutils.ask_dir()
 
 (dir_exists, dir_has_apks) = dirutils.check_dir(config.get("dir"))
+
+print()
 
 if not dir_exists:
     print("[ I ] Creating \"{0}\"...".format(config.get("dir")), end = " ", flush = True)
@@ -124,7 +135,12 @@ if not pkgdict:
     print("[ F ] Unable to create paths dictionary. Aborting.")
     utils.save_exit(config, config_path, 1)
 
-pkgs = pkgutils.list_installed_pkgs(args)
+if config.get("nougat") == True:
+    pkgs = pkgutils.list_installed_pkgs_nougat(args)
+    if not pkgs: config["nougat"] == False
+
+if config.get("nougat") == False:
+    pkgs = pkgutils.list_installed_pkgs(args)
 
 if not args.keep_overlays:
     if config.get("substratum") == None:
