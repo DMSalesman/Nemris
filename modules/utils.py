@@ -13,6 +13,19 @@ def save_exit(config, path, status):
     
     exit(status)
 
+def check_nougat():
+    """Check if the device falls into the Nougat API level range; returns bool."""
+    
+    (out, err) = subprocess.Popen("/system/bin/getprop ro.build.version.sdk", stdout = subprocess.PIPE, stderr = subprocess.PIPE, shell = True).communicate()
+    
+    if err:
+        supported = False
+    else:
+        api = int(out.decode("utf-8").rstrip("\n"))
+        supported = True if api >= 24 and api <= 25 else False
+    
+    return supported
+
 def sudo(cmd):
     """Executes a command cmd as root; returns bytes, bytes."""
     
