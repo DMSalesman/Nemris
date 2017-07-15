@@ -52,6 +52,24 @@ def list_installed_pkgs(args):
     
     return pkgs
 
+def list_installed_pkgs_nougat(args):
+    """Uses Nougat's cmd command to query the package service (faster); returns list."""
+    
+    prefix = "cmd package list packages"
+    
+    if args.user:
+        suffix = "-3"
+    elif args.system:
+        suffix = "-s"
+    elif args.disabled:
+        suffix = "-d"
+    else:
+        suffix = ""
+    
+    pkgs = [i[8:] for i in utils.sudo("{0} {1}".format(prefix, suffix))[0].decode("utf-8").split("\n") if i]
+    
+    return pkgs
+
 def check_substratum():
     """Checks if the Substratum engine is installed; returns bool."""
     
