@@ -48,7 +48,7 @@ if not args.user:
 
 print("************************")
 print(" NEMRIS - APK extractor ")
-print("       2017-07-15       ")
+print("       2017-07-19       ")
 print(" by Death Mask Salesman ")
 print("************************")
 
@@ -145,7 +145,7 @@ if config.get("nougat") == False:
 
 if not args.keep_overlays:
     if config.get("substratum") == None:
-        config["substratum"] = pkgutils.check_substratum()
+        config["substratum"] = pkgutils.check_substratum(config.get("nougat"))
     
     if config.get("substratum"):
         print("[ I ] Excluding Substratum overlays...", end = " ", flush = True)
@@ -161,39 +161,50 @@ if not args.keep_arcus and not config.get("substratum"):
     
     print("done.\n")
 
-extracted = 0
-ignored = 0
-
 # Extract APKs to the target directory and append MD5 checksums to MD5 list
-for i in pkgs:
+print("[ I ] Extracting previously unextracted packages...", end = " ", flush = True)
+
+n_extracted = 0
+n_ignored = 0
+extracted = []
+
+for i in pkgs:  
     pkgpath = pkgdict.get(i)
-    
-    (out, err) = apkutils.get_pkginfo(config.get("aapt"), pkgpath)    # filter stderr to avoid unneccessary gibberish by aapt
-    pkginfo = out.decode("utf-8")
-    
-    (displayedname, name) = apkutils.get_pkgname(pkginfo)
-    pkgver = apkutils.get_pkgver(pkginfo)
     (already_extracted, pkgsum) = pkgutils.check_already_extracted(pkgpath, config.get("md5sums"))
     
     if already_extracted:
-        print("[ I ] {0}: ignored.".format(displayedname), flush = True)
-        
-        ignored += 1
+        n_ignored += 1
     else:
-        print("[ I ] {0}: extracting...".format(displayedname), end = " ", flush = True)
+        (out, err) = apkutils.get_pkginfo(config.get("aapt"), pkgpath)
+        pkginfo = out.decode("utf-8")
+        
+        (displayedname, name) = apkutils.get_pkgname(pkginfo)
+        pkgver = apkutils.get_pkgver(pkginfo)
+        
         dest = "{0}/{1}_{2}.apk".format(config.get("dir"), name, pkgver)
         
         dirutils.extract(pkgpath, dest)
         
         config["md5sums"].append(pkgsum)
-        extracted += 1
-        
-        print("done.", flush = True)
+        extracted.append(displayedname)
+        n_extracted += 1
+
+print("done.")
 
 elapsed_time = utils.get_current_time() - start_time
+extracted.sort()
 
 print("\n[ I ] Operations completed in {0:.0f} hours, {1:.0f} minutes and {2:.0f} seconds.".format(elapsed_time / 60 / 60, elapsed_time / 60 % 60, elapsed_time % 60))
-print("[ I ] Extracted: {0} | Ignored: {1}".format(extracted, ignored))
+
+if extracted:
+    print("\n[ I ] Extracted packages:")
+    
+    for i in extracted:
+        print("   - {0}".format(i))
+    
+    print()
+
+print("\n[ I ] Extracted: {0} | Ignored: {1}".format(n_extracted, n_ignored))
 print("[ I ] Goodbye!")
 
 utils.save_exit(config, config_path, 0)
