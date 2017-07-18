@@ -70,10 +70,14 @@ def list_installed_pkgs_nougat(args):
     
     return pkgs
 
-def check_substratum():
+def check_substratum(nougat):
     """Checks if the Substratum engine is installed; returns bool."""
     
-    user_pkgs = [i[8:] for i in subprocess.Popen("pm list packages -3", stdout = subprocess.PIPE, shell = True).communicate()[0].decode("utf-8").split("\n") if i]
+    if nougat:
+        user_pkgs = [i[8:] for i in utils.sudo("cmd package list packages -3")[0].decode("utf-8").split("\n") if i]
+    else:
+        user_pkgs = [i[8:] for i in subprocess.Popen("pm list packages -3", stdout = subprocess.PIPE, shell = True).communicate()[0].decode("utf-8").split("\n") if i]
+    
     substratum_installed = True if "projekt.substratum" in user_pkgs else False
     
     return substratum_installed
