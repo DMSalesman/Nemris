@@ -48,7 +48,7 @@ if not args.user:
 
 print("************************")
 print(" NEMRIS - APK extractor ")
-print("       2017-07-19       ")
+print("       2017-07-26       ")
 print(" by Death Mask Salesman ")
 print("************************")
 
@@ -201,8 +201,6 @@ if extracted:
     
     for i in extracted:
         print("   - {0}".format(i))
-    
-    print()
 
 print("\n[ I ] Extracted: {0} | Ignored: {1}".format(n_extracted, n_ignored))
 print("[ I ] Goodbye!")
