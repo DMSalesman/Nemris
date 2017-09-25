@@ -1,7 +1,6 @@
 """Module with functions for management of installed APK lists."""
 
 import glob
-import hashlib
 import re
 import subprocess
 
@@ -100,7 +99,7 @@ def exclude_arcus_variants(pkgs):
 def check_already_extracted(pkgpath, md5sums):
     """Checks if an APK has already been extracted; returns bool, str."""
     
-    pkgsum = hashlib.md5(open(pkgpath, "rb").read()).hexdigest()
+    pkgsum = utils.compute_md5sum(pkgpath)
     already_extracted = True if pkgsum in md5sums else False
     
     return already_extracted, pkgsum

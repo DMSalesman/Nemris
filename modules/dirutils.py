@@ -1,7 +1,6 @@
 """Module with functions to perform operations on a target directory."""
 
 import glob
-import hashlib
 import os
 import re
 import shutil
@@ -42,10 +41,10 @@ def create_dir(dir):
     return dir_exists
 
 def calculate_md5(dir):
-    """Calculates the MD5 of all APK files in dir; returnas list."""
+    """Calculates the MD5 of all APK files in dir; returns list."""
     
     files = glob.glob(dir + "/*.apk")
-    md5sums = [hashlib.md5(open(i, "rb").read()).hexdigest() for i in files]
+    md5sums = [utils.compute_md5sum(i) for i in files]
     
     return md5sums
 
