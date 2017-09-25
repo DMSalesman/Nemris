@@ -48,7 +48,7 @@ if not args.user:
 
 print("************************")
 print(" NEMRIS - APK extractor ")
-print("       2017-07-26       ")
+print("       2017-09-25       ")
 print(" by Death Mask Salesman ")
 print("************************")
 
@@ -178,15 +178,15 @@ for i in pkgs:
         (out, err) = apkutils.get_pkginfo(config.get("aapt"), pkgpath)
         pkginfo = out.decode("utf-8")
         
-        (displayedname, name) = apkutils.get_pkgname(pkginfo)
+        pkgname = apkutils.get_pkgname(pkginfo)
         pkgver = apkutils.get_pkgver(pkginfo)
         
-        dest = "{0}/{1}_{2}.apk".format(config.get("dir"), name, pkgver)
+        dest = "{0}/{1}_{2}.apk".format(config.get("dir"), pkgname, pkgver)
         
         dirutils.extract(pkgpath, dest)
         
         config["md5sums"].append(pkgsum)
-        extracted.append(displayedname)
+        extracted.append(pkgname)
         n_extracted += 1
 
 print("done.")

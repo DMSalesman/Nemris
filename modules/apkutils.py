@@ -17,32 +17,10 @@ def get_pkgxml(aapt, path):
     return out, err
 
 def get_pkgname(pkginfo):
-    """Extracts the APK label from pkginfo; returns string, string."""
+    """Extracts the package name of the APK from pkginfo; returns string."""
+    pkgname = re.findall("package: name=\'(.*?)\'", pkginfo)[0]
     
-    displayed_name = ""
-    name = ""
-    
-    try:
-        displayed_name = re.findall("application-label:\'(.*?)\'", pkginfo)[0]
-        name = "".join(displayed_name.split()).replace("/", "")
-    except:
-        try:
-            displayed_name = re.findall("application-label-en(-GB|-US):\'(.*?)\'", pkginfo)[0][1]
-            name = "".join(displayed_name.split()).replace("/", "")
-        except:
-            try:
-                displayed_name = re.findall("application: label=\'(.*?)\'", pkginfo)[0]
-                name = "".join(displayed_name.split()).replace("/", "")
-            except:
-                displayed_name = re.findall("package: name=\'(.*?)\'", pkginfo)[0]
-                name = displayed_name
-    
-    # If everything else fails, fall back to package name
-    if not displayed_name:
-        displayed_name = re.findall("package: name=\'(.*?)\'", pkginfo)[0]
-        name = displayed_name
-    
-    return displayed_name, name
+    return pkgname
 
 def get_pkgver(pkginfo):
     """Extracts the APK version from pkginfo; returns string."""
