@@ -21,7 +21,8 @@ To run, Nemris requires:
 * Awareness of the popular Substratum Theme Engine overlays and Arcus theme variants, which Nemris automatically skips;
 * Discrimination between user, system and disabled apps;
 * Fast retrieval of APK paths, thanks to the `/data/system/packages.xml` file;
-* Caching of certain checks, to avoid calculating them unnecessarily more than once.
+* Caching of certain checks, to avoid calculating them unnecessarily more than once;
+* Resorting to the package name of APKs, to ensure that any APK name be correct.
 
 -----
 
